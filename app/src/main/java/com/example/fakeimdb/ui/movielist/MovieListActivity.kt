@@ -1,16 +1,16 @@
 package com.example.fakeimdb.ui.movielist
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fakeimdb.databinding.MovieListActivityBinding
+import com.example.fakeimdb.ui.moviedetail.MovieDetailActivity
 
 class MovieListActivity : AppCompatActivity() {
-
     private lateinit var binding: MovieListActivityBinding
-    private val viewModel: MovieListViewModel by viewModels() // Usa o viewModels() para acessar o ViewModel
+    private val viewModel: MovieListViewModel by viewModels()
     private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,20 +18,24 @@ class MovieListActivity : AppCompatActivity() {
         binding = MovieListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializa o adaptador com uma lista vazia inicialmente
-        movieAdapter = MovieAdapter(emptyList(), viewModel) // Passando o viewModel para o Adapter
+        // Configurar RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        movieAdapter = MovieAdapter(emptyList())
         binding.recyclerView.adapter = movieAdapter
 
-        // Observar o LiveData de filmes no ViewModel
-        viewModel.movies.observe(this, Observer { movies ->
-            // Atualiza o adapter com os novos filmes
-            if (movies != null) {
-                movieAdapter.updateMovies(movies) // Atualiza a lista no adapter
-            }
+        // Observar os filmes populares
+        viewModel.movies.observe(this, { movies ->
+            movieAdapter.updateMovies(movies)
         })
 
-        // Busca os filmes populares
+        // Carregar os filmes
         viewModel.getPopularMovies()
+
+        // Configurar o clique no item do RecyclerView
+        movieAdapter.setOnMovieClickListener { movieId ->
+            val intent = Intent(this, MovieDetailActivity::class.java)
+            intent.putExtra("MOVIE_ID", movieId) // Envia o ID correto do filme
+            startActivity(intent)
+        }
     }
 }
