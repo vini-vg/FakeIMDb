@@ -1,7 +1,10 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.FakeImdb" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Cor primária -->
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Cor de fundo -->
+        <item name="android:windowBackground">@color/black</item>
     </style>
 </resources>

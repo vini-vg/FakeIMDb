@@ -27,16 +27,14 @@
         android:id="@+id/movieGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textSize="14sp" />
 
     <!-- Avaliação do filme -->
     <TextView
         android:id="@+id/movieRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textSize="14sp" />
 
     <!-- Descrição do filme -->
     <TextView
@@ -44,6 +42,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginTop="8dp" />
 </LinearLayout>

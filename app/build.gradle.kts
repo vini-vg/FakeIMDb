@@ -45,6 +45,9 @@ android {
         jvmTarget = "1.8" // Compatibilidade com versões do Kotlin e Java
     }
 
+    viewBinding{
+        enable = true
+    }
     // Configuração do Hilt para Injeção de Dependência
     hilt {
         enableAggregatingTask = true
