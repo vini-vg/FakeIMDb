@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Básico -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Tons de Cinza -->
+    <color name="dark_gray">#FF333333</color>
+    <color name="gray">#FF888888</color>
+    <color name="light_gray">#FFCCCCCC</color>
+
+    <!-- Cores Primárias -->
+    <color name="primary">#FF6200EE</color>
+    <color name="primary_dark">#FF3700B3</color>
+    <color name="primary_light">#FFBB86FC</color>
+
+    <!-- Cores Secundárias -->
+    <color name="secondary">#FF03DAC5</color>
+    <color name="secondary_dark">#FF018786</color>
+    <color name="secondary_light">#FF80E8E3</color>
+
+    <!-- Destaques -->
+    <color name="gold">#FFFFD700</color>
+    <color name="error_red">#FFFF4444</color>
+    <color name="success_green">#FF4CAF50</color>
+
+    <!-- Fundo -->
+    <color name="background">#FFF5F5F5</color>
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="item_background">#FFEEEEEE</color>
+
+    <!-- Texto -->
+    <color name="text_primary">#FF212121</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="text_hint">#FFBDBDBD</color>
 </resources>

@@ -26,7 +26,7 @@ class MovieListActivity : AppCompatActivity() {
         // Observar o LiveData de filmes no ViewModel
         viewModel.movies.observe(this, Observer { movies ->
             // Atualiza o adapter quando os filmes mudam
-            movieAdapter.updateMovies(movies)
+//            movieAdapter.updateMovies(movies)
         })
 
         // Busca os filmes populares

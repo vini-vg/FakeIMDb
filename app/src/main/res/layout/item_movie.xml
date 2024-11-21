@@ -4,19 +4,49 @@
     android:orientation="vertical"
     android:padding="8dp">
 
+    <!-- Poster -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/moviePoster"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:contentDescription="@string/movie_poster" />
 
+    <!-- Nome do Filme -->
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/movieTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie Title"
         android:textSize="16sp"
-        android:padding="4dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingTop="4dp"
+        android:textColor="@color/black" />
+
+    <!-- Gênero -->
+    <TextView
+        android:id="@+id/movieGenre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="2dp"
+        android:textColor="@color/dark_gray" />
+
+    <!-- Avaliação -->
+    <TextView
+        android:id="@+id/movieRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="2dp"
+        android:textColor="@color/gold" />
+
+    <!-- Descrição -->
+    <TextView
+        android:id="@+id/movieDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/gray" />
 </LinearLayout>
