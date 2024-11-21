@@ -8,7 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.fakeimdb.data.AppDatabase
 import com.example.fakeimdb.databinding.LoginActivityBinding
 import com.example.fakeimdb.ui.movielist.MovieListActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,37 +21,39 @@ class LoginActivity : AppCompatActivity() {
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Botão para ir para a tela de registro
         binding.btnGoToRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
+        // Botão para login
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-            if (authenticateUser(username, password)) {
-                // Login bem-sucedido, navegar para a próxima tela
-                startActivity(Intent(this, MovieListActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this, "Usuário ou senha incorretos", Toast.LENGTH_SHORT).show()
+            // Lidar com autenticação dentro de uma coroutine
+            lifecycleScope.launch {
+                val isAuthenticated = authenticateUser(username, password)
+
+                if (isAuthenticated) {
+                    // Login bem-sucedido, navegar para a próxima tela
+                    startActivity(Intent(this@LoginActivity, MovieListActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Usuário ou senha incorretos", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
-    private fun authenticateUser(username: String, password: String): Boolean {
-        var isAuthenticated = false
+    // Torne a função suspensa e use comContext(Dispatchers.IO) para garantir o acesso ao banco de dados fora da thread principal
+    private suspend fun authenticateUser(username: String, password: String): Boolean {
+        val db = AppDatabase.getDatabase(applicationContext)
 
-        lifecycleScope.launch {
-            val db = AppDatabase.getDatabase(applicationContext)
+        // A consulta ao banco de dados deve ser feita em uma thread de fundo
+        return withContext(Dispatchers.IO) { // Utilizando Dispatchers.IO para acessar o banco de dados
             val user = db.userDao().getUserByUsernameAndPassword(username, password)
-
-            if (user != null) {
-                isAuthenticated = true
-            }
+            user != null
         }
-
-        return isAuthenticated
     }
 }
-

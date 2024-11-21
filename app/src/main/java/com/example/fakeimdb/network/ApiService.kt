@@ -1,5 +1,6 @@
 package com.example.fakeimdb.network
 
+import com.example.fakeimdb.model.GenreResponse
 import com.example.fakeimdb.model.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,8 +14,11 @@ interface ApiService {
         @Query("page") page: Int = 1
     ): MovieResponse
 
-    abstract fun getPopularMovies(): MovieResponse
-
-    // Você pode adicionar outros endpoints conforme necessário
+    // Endpoint para obter os gêneros de filmes
+    @GET("genre/movie/list")
+    suspend fun getGenres(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "pt-BR"
+    ): GenreResponse
 }
 

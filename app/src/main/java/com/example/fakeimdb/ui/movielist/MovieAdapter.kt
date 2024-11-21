@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fakeimdb.R
-import com.example.fakeimdb.databinding.ItemMovieBinding
-import com.example.fakeimdb.model.Movie
+import com.example.fakeimdb.model.MovieResponseItem
 
-class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(
+    private var movies: List<MovieResponseItem>,
+    private val viewModel: MovieListViewModel // Passando o ViewModel para o Adapter
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // ViewHolder para armazenar os elementos do layout
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,18 +33,27 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
 
+        // Usando o ViewModel para pegar o nome do(s) gênero(s)
+        val genres = movie.genre_ids?.let { viewModel.getGenresName(it) }
+
         // Bind dos dados nos elementos visuais
         holder.title.text = movie.title
-        holder.genre.text = "Gênero: ${movie.genre}"
-        holder.rating.text = "⭐ Avaliação: ${movie.rating}"
-        holder.description.text = movie.description
+        holder.genre.text = "Gênero: $genres" // Exibe os gêneros
+        holder.rating.text = "⭐ Avaliação: ${movie.vote_average}"
+        holder.description.text = movie.overview
 
         // Carregar a imagem do poster (usando Glide ou Picasso)
         Glide.with(holder.poster.context)
-            .load(movie.posterUrl) // URL da imagem
+            .load("https://image.tmdb.org/t/p/w500${movie.poster_path}") // URL da imagem
             .placeholder(R.drawable.placeholder_image) // Imagem padrão
             .into(holder.poster)
     }
 
     override fun getItemCount(): Int = movies.size
+
+    // Método para atualizar a lista de filmes
+    fun updateMovies(newMovies: List<MovieResponseItem>) {
+        movies = newMovies
+        notifyDataSetChanged() // Notifica o adaptador sobre as mudanças
+    }
 }

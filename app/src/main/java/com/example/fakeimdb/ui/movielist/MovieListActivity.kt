@@ -19,14 +19,16 @@ class MovieListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Inicializa o adaptador com uma lista vazia inicialmente
-        movieAdapter = MovieAdapter(emptyList())
+        movieAdapter = MovieAdapter(emptyList(), viewModel) // Passando o viewModel para o Adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = movieAdapter
 
         // Observar o LiveData de filmes no ViewModel
         viewModel.movies.observe(this, Observer { movies ->
-            // Atualiza o adapter quando os filmes mudam
-//            movieAdapter.updateMovies(movies)
+            // Atualiza o adapter com os novos filmes
+            if (movies != null) {
+                movieAdapter.updateMovies(movies) // Atualiza a lista no adapter
+            }
         })
 
         // Busca os filmes populares
