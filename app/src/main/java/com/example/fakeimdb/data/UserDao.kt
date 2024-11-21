@@ -8,8 +8,8 @@ import androidx.room.Query
 interface UserDao {
 
     @Insert
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
     @Query("SELECT * FROM users WHERE username = :username AND password = :password LIMIT 1")
-    suspend fun getUserByUsernameAndPassword(username: String, password: String): User?
+    fun getUserByUsernameAndPassword(username: String, password: String): User?
 }

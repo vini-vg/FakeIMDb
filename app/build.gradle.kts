@@ -54,6 +54,7 @@ android {
 dependencies {
     // Dependências essenciais do Android
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.recyclerview)
@@ -64,6 +65,7 @@ dependencies {
 
     // Room para persistência local
     implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     kapt(libs.room.compiler)
 
     // ViewModel e LiveData para gerenciamento de ciclo de vida

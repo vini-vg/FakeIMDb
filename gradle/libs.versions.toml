@@ -1,5 +1,5 @@
 [versions]
-agp = "8.6.0"
+agp = "8.6.1"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -9,10 +9,10 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
-recyclerview = "1.3.1"
+recyclerview = "1.3.2"
 retrofit = "2.9.0"
-room = "2.5.1"
-lifecycle = "2.6.1"
+room = "2.7.0-alpha11"
+lifecycle = "2.8.7"
 hilt = "2.48"
 glide = "4.16.0"
 
@@ -22,12 +22,14 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+#noinspection SimilarGradleDependency
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 # Material Design
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # RecyclerView
+#noinspection SimilarGradleDependency
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 # Testing Libraries
@@ -42,6 +44,7 @@ retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ver
 # Room (Database)
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 # Lifecycle
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
