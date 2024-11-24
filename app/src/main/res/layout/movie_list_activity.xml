@@ -11,6 +11,13 @@
         android:layout_height="wrap_content"
         android:queryHint="Buscar filmes..." />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

@@ -1,9 +1,12 @@
-<!-- item_movie.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <!-- Imagem do poster -->
     <ImageView
@@ -22,12 +25,24 @@
         android:textStyle="bold"
         android:layout_marginTop="8dp" />
 
+    <!-- Descrição do filme -->
+    <TextView
+        android:id="@+id/movieOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:text="Descrição do filme" />
+
     <!-- Gênero do filme -->
     <TextView
         android:id="@+id/movieGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_marginTop="8dp" />
 
     <!-- Avaliação do filme -->
     <TextView
@@ -35,12 +50,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
-
-    <!-- Descrição do filme -->
-    <TextView
-        android:id="@+id/movieDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp" />
 </LinearLayout>

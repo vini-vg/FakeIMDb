@@ -32,14 +32,14 @@
         android:id="@+id/movieRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating: 0"
+        android:text="Nota: 0"
         android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/favoriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark as Favorite"
+        android:text="Marcar como favorito"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

@@ -17,15 +17,16 @@ class MovieDetailViewModel : ViewModel() {
 
     // Função para buscar os detalhes de um filme específico
     fun getMovieDetails(movieId: Int) {
-        val apiKey = "YOUR_API_KEY" // Substitua com sua chave de API real
+        val apiKey = "7b1b54d3177cf9fd220c94991c98b592" // Substitua pela sua chave de API válida
+        val language = "pt-BR" // Idioma em português
 
-        RetrofitInstance.api.getMovieDetails(movieId, apiKey).enqueue(object : Callback<MovieDetailResponse> {
+        RetrofitInstance.api.getMovieDetails(movieId, apiKey, language).enqueue(object : Callback<MovieDetailResponse> {
             override fun onResponse(call: Call<MovieDetailResponse>, response: Response<MovieDetailResponse>) {
                 if (response.isSuccessful) {
-                    _movieDetails.postValue(response.body()) // Atualiza o LiveData com os detalhes
+                    _movieDetails.postValue(response.body())
                     Log.d("MovieDetailViewModel", "Detalhes do filme recebidos: ${response.body()}")
                 } else {
-                    Log.e("MovieDetailViewModel", "Erro na resposta: ${response.message()}")
+                    Log.e("MovieDetailViewModel", "Erro na resposta: Código ${response.code()} - ${response.errorBody()?.string()}")
                 }
             }
 
@@ -35,3 +36,4 @@ class MovieDetailViewModel : ViewModel() {
         })
     }
 }
+

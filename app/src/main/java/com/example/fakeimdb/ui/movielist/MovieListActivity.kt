@@ -2,6 +2,7 @@ package com.example.fakeimdb.ui.movielist
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,13 +24,17 @@ class MovieListActivity : AppCompatActivity() {
         movieAdapter = MovieAdapter(emptyList())
         binding.recyclerView.adapter = movieAdapter
 
-        // Observar os filmes populares
+        // Exibir ProgressBar enquanto os filmes são carregados
+        binding.progressBar.visibility = View.VISIBLE
+
+        // Observar os filmes
         viewModel.movies.observe(this, { movies ->
+            binding.progressBar.visibility = if (movies.isEmpty()) View.VISIBLE else View.GONE
             movieAdapter.updateMovies(movies)
         })
 
         // Carregar os filmes
-        viewModel.getPopularMovies()
+        viewModel.getAllMovies()
 
         // Configurar o clique no item do RecyclerView
         movieAdapter.setOnMovieClickListener { movieId ->
@@ -37,5 +42,20 @@ class MovieListActivity : AppCompatActivity() {
             intent.putExtra("MOVIE_ID", movieId) // Envia o ID correto do filme
             startActivity(intent)
         }
+
+        // Configura a barra de pesquisa
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false // Não fazemos nada ao pressionar Enter
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    val filteredMovies = viewModel.filterMovies(it)
+                    movieAdapter.updateMovies(filteredMovies)
+                }
+                return true
+            }
+        })
     }
 }

@@ -1,53 +1,58 @@
 package com.example.fakeimdb.ui.movielist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fakeimdb.R
+import com.example.fakeimdb.databinding.ItemMovieBinding
 import com.example.fakeimdb.model.MovieResponseItem
 
 class MovieAdapter(private var movies: List<MovieResponseItem>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private var onMovieClickListener: ((Int) -> Unit)? = null
-
-    // ViewHolder para armazenar os elementos do layout
-    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val poster: ImageView = itemView.findViewById(R.id.moviePoster)
-        val title: TextView = itemView.findViewById(R.id.movieTitle)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-        return MovieViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movies[position]
-
-        holder.title.text = movie.title
-        Glide.with(holder.poster.context)
-            .load("https://image.tmdb.org/t/p/w500${movie.poster_path}")
-            .into(holder.poster)
-
-        // Listener de clique
-        holder.itemView.setOnClickListener {
-            onMovieClickListener?.invoke(movie.id)
-        }
-    }
-
-    override fun getItemCount(): Int = movies.size
-
+    // Atualiza a lista de filmes
     fun updateMovies(newMovies: List<MovieResponseItem>) {
         movies = newMovies
         notifyDataSetChanged()
     }
 
-    // Função para configurar o listener de clique
+    // Configura o clique no item
+    private var onMovieClickListener: ((Int) -> Unit)? = null
+
     fun setOnMovieClickListener(listener: (Int) -> Unit) {
         onMovieClickListener = listener
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        val movie = movies[position]
+        holder.bind(movie)
+    }
+
+    override fun getItemCount() = movies.size
+
+    inner class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(movie: MovieResponseItem) {
+            binding.movieTitle.text = movie.title
+            binding.movieOverview.text = movie.overview
+
+            // Construir a URL da imagem
+            val imageUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}"
+
+            // Usar Glide para carregar a imagem
+            Glide.with(binding.root.context)
+                .load(imageUrl)
+                .placeholder(com.example.fakeimdb.R.drawable.placeholder_image) // Imagem de placeholder enquanto carrega
+                .into(binding.moviePoster)
+
+            // Configurar o clique no item
+            itemView.setOnClickListener {
+                onMovieClickListener?.invoke(movie.id)
+            }
+        }
     }
 }

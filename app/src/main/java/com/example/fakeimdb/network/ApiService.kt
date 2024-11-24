@@ -14,7 +14,8 @@ interface ApiService {
     @GET("movie/{movie_id}")
     fun getMovieDetails(
         @Path("movie_id") movieId: Int, // Pega o ID do filme
-        @Query("api_key") apiKey: String // Chave da API
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "pt-BR"// Chave da API
     ): Call<MovieDetailResponse> // Retorna o tipo Call com MovieDetailResponse
 
     // Endpoint para filmes populares
@@ -31,4 +32,12 @@ interface ApiService {
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "pt-BR"
     ): GenreResponse
+
+    @GET("discover/movie")
+    suspend fun discoverMovies(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "pt-BR",
+        @Query("sort_by") sortBy: String = "popularity.desc", // Ordenação por popularidade
+        @Query("page") page: Int // Página a ser carregada
+    ): MovieResponse
 }
