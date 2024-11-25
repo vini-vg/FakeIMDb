@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">FakeImdb</string>
     <string name="movie_poster">Poster do Filme</string>
+
+    <!-- Texto para botões de favoritos -->
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
+    <string name="remove_from_favorites">Remover dos favoritos</string>
+
+    <!-- Formato de avaliação do filme -->
+    <string name="movie_rating">Avaliação: %1$s</string>
 </resources>

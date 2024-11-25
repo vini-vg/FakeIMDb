@@ -29,6 +29,7 @@
         <activity android:name="com.example.fakeimdb.ui.auth.RegisterActivity"/>
         <activity android:name="com.example.fakeimdb.ui.movielist.MovieListActivity"/>
         <activity android:name="com.example.fakeimdb.ui.moviedetail.MovieDetailActivity"/>
+        <activity android:name="com.example.fakeimdb.ui.favorites.FavoritesActivity" />
     </application>
 
 </manifest>

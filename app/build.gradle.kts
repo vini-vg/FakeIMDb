@@ -95,6 +95,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
+    // Room Database
+    implementation ("androidx.room:room-runtime:2.5.0")
+    annotationProcessor ("androidx.room:room-compiler:2.5.0")
+
+    // Para suporte ao Kotlin (se estiver usando Kotlin)
+    implementation ("androidx.room:room-ktx:2.5.0")
+
+    implementation ("com.google.android.material:material:1.9.0") // Para o Drawer
+    implementation ("androidx.drawerlayout:drawerlayout:1.1.1") // Para o Layout
+
     // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

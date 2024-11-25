@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fakeimdb.databinding.ItemMovieBinding
+import com.example.fakeimdb.data.FavoriteMovie
 import com.example.fakeimdb.model.MovieResponseItem
 
-class MovieAdapter(private var movies: List<MovieResponseItem>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+// Adapter genérico que pode lidar com MovieResponseItem e FavoriteMovie
+class MovieAdapter(private var movies: List<Any>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    // Atualiza a lista de filmes
-    fun updateMovies(newMovies: List<MovieResponseItem>) {
+    // Atualiza a lista de filmes, pode ser tanto de MovieResponseItem quanto FavoriteMovie
+    fun updateMovies(newMovies: List<Any>) {
         movies = newMovies
         notifyDataSetChanged()
     }
@@ -36,22 +38,42 @@ class MovieAdapter(private var movies: List<MovieResponseItem>) : RecyclerView.A
 
     inner class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: MovieResponseItem) {
-            binding.movieTitle.text = movie.title
-            binding.movieOverview.text = movie.overview
+        // Bind os dados dependendo do tipo de objeto (MovieResponseItem ou FavoriteMovie)
+        fun bind(movie: Any) {
+            when (movie) {
+                is MovieResponseItem -> {
+                    // Exibir informações do MovieResponseItem (API)
+                    binding.movieTitle.text = movie.title
+                    binding.movieOverview.text = movie.overview
 
-            // Construir a URL da imagem
-            val imageUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}"
+                    // Construir a URL da imagem
+                    val imageUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}"
 
-            // Usar Glide para carregar a imagem
-            Glide.with(binding.root.context)
-                .load(imageUrl)
-                .placeholder(com.example.fakeimdb.R.drawable.placeholder_image) // Imagem de placeholder enquanto carrega
-                .into(binding.moviePoster)
+                    // Usar Glide para carregar a imagem
+                    Glide.with(binding.root.context)
+                        .load(imageUrl)
+                        .placeholder(com.example.fakeimdb.R.drawable.placeholder_image)
+                        .into(binding.moviePoster)
 
-            // Configurar o clique no item
-            itemView.setOnClickListener {
-                onMovieClickListener?.invoke(movie.id)
+                    itemView.setOnClickListener {
+                        onMovieClickListener?.invoke(movie.id)
+                    }
+                }
+                is FavoriteMovie -> {
+                    // Exibir informações do FavoriteMovie
+                    binding.movieTitle.text = movie.title
+                    binding.movieOverview.text = movie.overview
+
+                    // Mostrar a imagem de poster, se disponível
+                    Glide.with(binding.root.context)
+                        .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
+                        .placeholder(com.example.fakeimdb.R.drawable.placeholder_image)
+                        .into(binding.moviePoster)
+
+                    itemView.setOnClickListener {
+                        onMovieClickListener?.invoke(movie.id)
+                    }
+                }
             }
         }
     }
