@@ -10,6 +10,7 @@ import com.example.fakeimdb.data.MovieDatabase
 import com.example.fakeimdb.data.FavoriteMovie
 import com.example.fakeimdb.model.MovieDetailResponse
 import com.example.fakeimdb.network.RetrofitInstance
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,13 +21,16 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     private val _movieDetails = MutableLiveData<MovieDetailResponse>()
     val movieDetails: LiveData<MovieDetailResponse> get() = _movieDetails
 
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean> get() = _isFavorite
+
     private val database = MovieDatabase.getInstance(application)
-    private val favoriteMovieDao = database.favoriteMovieDao() // Usando o DAO correto para filmes favoritos
+    private val favoriteMovieDao = database.favoriteMovieDao()
 
     // Função para buscar os detalhes de um filme específico
     fun getMovieDetails(movieId: Int) {
-        val apiKey = "7b1b54d3177cf9fd220c94991c98b592" // Substitua pela sua chave de API válida
-        val language = "pt-BR" // Idioma em português
+        val apiKey = "7b1b54d3177cf9fd220c94991c98b592"
+        val language = "pt-BR"
 
         RetrofitInstance.api.getMovieDetails(movieId, apiKey, language).enqueue(object : Callback<MovieDetailResponse> {
             override fun onResponse(call: Call<MovieDetailResponse>, response: Response<MovieDetailResponse>) {
@@ -46,27 +50,27 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
 
     // Adicionar filme aos favoritos
     fun addMovieToFavorites(movie: FavoriteMovie) {
-        viewModelScope.launch {
-            favoriteMovieDao.addFavorite(movie) // Usando o DAO correto para inserir o filme
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteMovieDao.addFavorite(movie)
             Log.d("MovieDetailViewModel", "Filme adicionado aos favoritos: ${movie.title}")
+            _isFavorite.postValue(true) // Atualiza o estado
         }
     }
 
     // Remover filme dos favoritos
     fun removeMovieFromFavorites(movie: FavoriteMovie) {
-        viewModelScope.launch {
-            favoriteMovieDao.removeFavorite(movie) // Usando o DAO correto para remover o filme
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteMovieDao.removeFavorite(movie)
             Log.d("MovieDetailViewModel", "Filme removido dos favoritos: ${movie.title}")
+            _isFavorite.postValue(false) // Atualiza o estado
         }
     }
 
     // Verificar se o filme está nos favoritos
-    fun isFavorite(movieId: Int): LiveData<Boolean> {
-        val isFavorite = MutableLiveData<Boolean>()
-        viewModelScope.launch {
-            val movie = favoriteMovieDao.getFavoriteMovieById(movieId) // Usando o DAO correto para buscar o filme
-            isFavorite.postValue(movie != null)
+    fun checkIfFavorite(movieId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val movie = favoriteMovieDao.getFavoriteMovieById(movieId)
+            _isFavorite.postValue(movie != null)
         }
-        return isFavorite
     }
 }

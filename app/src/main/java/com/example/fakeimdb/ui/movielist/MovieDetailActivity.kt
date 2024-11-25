@@ -32,27 +32,16 @@ class MovieDetailActivity : AppCompatActivity() {
             movieDetails?.let { updateUI(it) }
         }
 
+        // Observar se o filme está nos favoritos
+        viewModel.isFavorite.observe(this) { isFavorite ->
+            updateFavoriteButton(isFavorite)
+        }
+
         // Carregar os detalhes do filme
         viewModel.getMovieDetails(movieId)
 
-        // Verificar se o filme está nos favoritos
-        viewModel.isFavorite(movieId).observe(this) { isFavorite ->
-            if (isFavorite) {
-                binding.favoriteButton.text = getString(R.string.remove_from_favorites)
-                binding.favoriteButton.setOnClickListener {
-                    val favoriteMovie = convertToFavoriteMovie(viewModel.movieDetails.value!!)
-                    viewModel.removeMovieFromFavorites(favoriteMovie)
-                    Toast.makeText(this, "${favoriteMovie.title} removido dos favoritos!", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                binding.favoriteButton.text = getString(R.string.add_to_favorites)
-                binding.favoriteButton.setOnClickListener {
-                    val favoriteMovie = convertToFavoriteMovie(viewModel.movieDetails.value!!)
-                    viewModel.addMovieToFavorites(favoriteMovie)
-                    Toast.makeText(this, "${favoriteMovie.title} adicionado aos favoritos!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+        // Checar se o filme é favorito
+        viewModel.checkIfFavorite(movieId)
     }
 
     // Atualizar a UI com os detalhes do filme
@@ -69,6 +58,25 @@ class MovieDetailActivity : AppCompatActivity() {
             .into(binding.moviePoster)
     }
 
+    // Atualizar o botão de favoritos
+    private fun updateFavoriteButton(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.favoriteButton.text = getString(R.string.remove_from_favorites)
+            binding.favoriteButton.setOnClickListener {
+                val favoriteMovie = convertToFavoriteMovie(viewModel.movieDetails.value!!)
+                viewModel.removeMovieFromFavorites(favoriteMovie)
+                Toast.makeText(this, "${favoriteMovie.title} removido dos favoritos!", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            binding.favoriteButton.text = getString(R.string.add_to_favorites)
+            binding.favoriteButton.setOnClickListener {
+                val favoriteMovie = convertToFavoriteMovie(viewModel.movieDetails.value!!)
+                viewModel.addMovieToFavorites(favoriteMovie)
+                Toast.makeText(this, "${favoriteMovie.title} adicionado aos favoritos!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     // Converte os detalhes do filme em um objeto FavoriteMovie
     private fun convertToFavoriteMovie(movieDetails: MovieDetailResponse): FavoriteMovie {
         return FavoriteMovie(
@@ -76,7 +84,7 @@ class MovieDetailActivity : AppCompatActivity() {
             title = movieDetails.title,
             overview = movieDetails.overview,
             posterPath = movieDetails.poster_path ?: "",
-            rating = movieDetails.vote_average,  // Adicionando rating
+            rating = movieDetails.vote_average,
             favorite = 0 // Definir o valor padrão para não favorito
         )
     }
