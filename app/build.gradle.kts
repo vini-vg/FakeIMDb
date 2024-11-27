@@ -104,6 +104,7 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.9.0") // Para o Drawer
     implementation ("androidx.drawerlayout:drawerlayout:1.1.1") // Para o Layout
+    
 
     // Testes
     testImplementation(libs.junit)

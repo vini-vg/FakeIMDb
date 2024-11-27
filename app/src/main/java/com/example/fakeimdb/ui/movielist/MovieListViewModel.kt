@@ -34,7 +34,7 @@ class MovieListViewModel : ViewModel() {
                     Log.d("MovieListViewModel", "Carregando página $page com ${response.results.size} filmes")
                     allMovies.addAll(response.results)
                     page++
-                } while (page <= 10)
+                } while (page <= 100)
 
                 _movies.postValue(allMovies) // Atualiza o LiveData com todos os filmes carregados
                 Log.d("MovieListViewModel", "Total de filmes carregados: ${allMovies.size}")

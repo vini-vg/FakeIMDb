@@ -33,6 +33,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.imageViewRegister.setImageResource(R.drawable.movie_roll)
         }
 
+        // Botão de registro
         binding.btnRegister.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
@@ -44,6 +45,13 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 registerUser(username, password)
             }
+        }
+
+        // Botão para redirecionar para a tela de login
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish() // Finaliza a atividade de registro para não voltar
         }
     }
 
@@ -66,14 +74,23 @@ class RegisterActivity : AppCompatActivity() {
                     withContext(Dispatchers.IO) {
                         userDao.insert(user)
                     }
-                    Toast.makeText(this@RegisterActivity, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Usuário registrado com sucesso!",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     // Navega para a tela de login
-                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@RegisterActivity, "Erro ao registrar o usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@RegisterActivity,
+                    "Erro ao registrar o usuário: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
