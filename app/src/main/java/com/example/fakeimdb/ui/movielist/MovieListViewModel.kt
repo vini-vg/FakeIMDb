@@ -24,7 +24,6 @@ class MovieListViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 var page = 1
-                var totalPages: Int
                 allMovies.clear() // Limpar a lista antes de carregar novos filmes
 
                 do {
@@ -34,9 +33,8 @@ class MovieListViewModel : ViewModel() {
                     )
                     Log.d("MovieListViewModel", "Carregando página $page com ${response.results.size} filmes")
                     allMovies.addAll(response.results)
-                    totalPages = response.total_pages
                     page++
-                } while (page <= totalPages)
+                } while (page <= 10)
 
                 _movies.postValue(allMovies) // Atualiza o LiveData com todos os filmes carregados
                 Log.d("MovieListViewModel", "Total de filmes carregados: ${allMovies.size}")

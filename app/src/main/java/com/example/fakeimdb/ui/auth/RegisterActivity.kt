@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import com.example.fakeimdb.R
 import com.example.fakeimdb.data.AppDatabase
 import com.example.fakeimdb.data.User
 import com.example.fakeimdb.databinding.RegisterActivityBinding
@@ -20,6 +22,16 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = RegisterActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Verifica o tema atual
+        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO
+
+        // Define a imagem com base no tema
+        if (isDarkMode) {
+            binding.imageViewRegister.setImageResource(R.drawable.movie_roll_dark)
+        } else {
+            binding.imageViewRegister.setImageResource(R.drawable.movie_roll)
+        }
 
         binding.btnRegister.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
