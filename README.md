@@ -48,7 +48,8 @@ Welcome to Fake IMDb, a Kotlin-based application that allows you to view a list 
 
 📸 Screenshots
 
- 
+<img src="screenshots/home light mode.png" width="300"> <img src="screenshots/login light mode.png" width="300"> 
+<img src="screenshots/catalog light mode.png" width="300"> <img src="screenshots/details light mode.png" width="300"> 
 
 ✨ Features
 
