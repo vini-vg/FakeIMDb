@@ -5,7 +5,7 @@ Bem-vindo ao Fake IMDb, um aplicativo desenvolvido em Kotlin que permite visuali
 
 📸 Screenshots
 
- 
+<img src="screenshots/home dark mode.png" width="300"> <img src="screenshots/details dark mode.png" width="300"> 
 
 ✨ Funcionalidades
 
