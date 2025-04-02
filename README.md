@@ -42,6 +42,10 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 
 
 
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 🎬 Fake IMDb (English translation)
 
 Welcome to Fake IMDb, a Kotlin-based application that allows you to view a list of movies with details about each one, similar to IMDb.
