@@ -36,10 +36,6 @@ Configure sua chave de API, se necessário.
 
 Execute o projeto em um emulador ou dispositivo físico.
 
-📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
